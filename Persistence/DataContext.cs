@@ -29,3 +29,4 @@ namespace Persistence
 // Notes
 // dotnet-ef migrations add InitialCreate -p Persistence/ -s API/
 // dotnet ef database update
+// dotnet ef database drop  -p Persistence/ -s API/

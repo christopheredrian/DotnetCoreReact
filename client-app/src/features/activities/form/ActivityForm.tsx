@@ -5,24 +5,19 @@ import {
 import { IActivity } from '../../../app/models/Activity';
 import { v4 as uuid } from 'uuid';
 import ActivityStore from '../../../app/stores/activityStore';
+import { observer } from 'mobx-react-lite';
 
 interface IProps {
     initialActivity: IActivity | undefined;
-    setEditMode: (editMode: boolean) => void;
-    editActivity: (activity: IActivity) => void;
-    submitting: boolean;
 }
 
 
 const ActivityForm: React.FC<IProps> = ({
     initialActivity,
-    setEditMode,
-    editActivity,
-    submitting,
 }) => {
 
     const activityStore = useContext(ActivityStore);
-    const { createActivity } = activityStore;
+    const { createActivity, editActivity, cancelSelectedActivity, submitting } = activityStore;
 
     const initializeForm = () => {
 
@@ -81,11 +76,11 @@ const ActivityForm: React.FC<IProps> = ({
                 <Form.Input name='city' placeholder={'City'} value={activity.city} onChange={handleInputChange}/>
                 <Form.Input name='venue' placeholder={'Venue'} value={activity.venue} onChange={handleInputChange}/>
                 <Button loading={submitting} floated='right' positive type='submit' content='Submit' />
-                <Button onClick={() => setEditMode(false)} floated='right' type='button' content='Cancel' />
+                <Button onClick={cancelSelectedActivity} floated='right' type='button' content='Cancel' />
            </Form>
         </Segment>
     );
 };
 
 
-export default ActivityForm;
+export default observer(ActivityForm);
